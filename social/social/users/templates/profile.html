@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    {% if user.is_authenticated %}
+        <div class="container py-5">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td>First Name</td>
+                        <td>{{user.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td>{{user.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+                </tbody>
+            </table>     
+        </div>
+    {% endif %}
+{% endblock page_content %}

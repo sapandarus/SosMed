@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <div class="container py-5">
+        {% for u in users %}
+        <div class="card" style="width: 50%;">
+            <div class="card-body">
+                <h5 class="card-title">{{ u.username }}</h5>
+                <p class="card-text">{{ u.first_name }} {{ u.last_name }}</p>
+                {% if user.is_authenticated %}
+                    <form method="POST" action="/users/follow">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Follow</a>
+                        <input type="hidden" name="search_username" value="{{ u.username }}">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

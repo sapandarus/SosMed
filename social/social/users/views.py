@@ -3,11 +3,19 @@ from .forms import NewUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+
 
 def homepage(request):
         return render(request=request, template_name="home.html", context={})
 
+def profile(request):
+        return render(request=request, template_name="profile.html", context={})
+
 def register_request(request):
+    if request.user.is_authenticated:
+        return redirect("profile")
+    
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -22,6 +30,9 @@ def register_request(request):
     return render(request=request, template_name="register.html", context={"register_form":form})
 
 def login_request(request):
+    if request.user.is_authenticated:
+        return redirect("profile")
+    
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -31,7 +42,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("homepage")
+                return redirect("profile")
             else:
                 messages.error(request, "Invalid username or password")
         else:
@@ -42,4 +53,18 @@ def login_request(request):
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
+    return redirect("login")
+
+def search(request):
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        try:
+            users = User.objects.filter(username__contains=username).values()
+            return render(request=request, template_name="search.html", context={"users":users})
+        except:
+            messages.info(request, "user not found")
+            return redirect("homepage")
     return redirect("homepage")
+
+def follow(request):
+    

@@ -1,32 +1,22 @@
 # SosMed
 
-## As a user I can register to the platform
+## [v] As a user I can register to the platform
 
-## As a user I can post an image that will be shown to the whole world
+## [v] As a user I can login tot the platform
 
 ## As a user I can follow a person
 
-## As a user I can unfollow a person
+- Search
+- Listed username
+- Follow
 
-## As a user I can hide who I follow
+## As a user I can post an image that will be shown to the whole world
+
+## As a user I can unfollow a person
 
 ## As a user I can see images that person that I follow post
 
 Database
-
-users
-
-id                  text (uuid, pk)
-name                text
-username            text (index, unique)
-email               text
-phone_number        text
-password            text
-is_verified         bool
-is_deleted          bool
-created_at          timestamp
-updated_at          timestamp
-deleted_at          timestamp
 
 posts
 
